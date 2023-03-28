@@ -1,4 +1,5 @@
-const argv = require("yargs").argv;
+const { program } = require("commander");
+const { option } = require("yargs");
 const contacts = require("./contacts");
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
@@ -8,7 +9,7 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       return console.log(allContacts);
 
     case "readById":
-      const oneContact = await contacts.getAllContactById(id);
+      const oneContact = await contacts.getContactById(id);
       return console.log(oneContact);
 
     case "add":
@@ -25,23 +26,13 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-invokeAction(argv);
-// invokeAction({ action: "list" });
-// invokeAction({ action: "readById", id: "AeHIrLTr6JkxGE6SN-0Rw" });
-// invokeAction({
-//   action: "add",
-//   name: "Alex",
-//   email: "san2003@ukr.net",
-//   phone: "0675555555",
-// });
-// invokeAction({
-//   action: "updateById",
-//   id: "GnTwWkYSRtI2zll3XnAFq",
-//   name: "Alla",
-//   email: "Alla@ukr.net",
-//   phone: "0990760933",
-// });
-// invokeAction({
-//   action: "deleteById",
-//   id: "rsKkOQUi80UsgVPCcLZZW",
-// });
+program
+  .option("-a, --action <type>")
+  .option("-i, --id <type>")
+  .option("-n, --name <type>")
+  .option("-e, --email <type>")
+  .option("-p, --phone <type>");
+
+program.parse();
+const options = program.opts();
+invokeAction(options);
