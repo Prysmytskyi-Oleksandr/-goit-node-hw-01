@@ -1,6 +1,8 @@
+const yargs = require("yargs");
+const { hideBin } = require("yargs/helpers");
 const contacts = require("./contacts");
 
-const invokAction = async ({ action, id, name, email, phone }) => {
+const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
       const allContacts = await contacts.getAllContacts();
@@ -24,22 +26,25 @@ const invokAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
-// invokAction({ action: "list" });
-// invokAction({ action: "readById", id: "AeHIrLTr6JkxGE6SN-0Rw" });
-// invokAction({
+const arr = hideBin(process.argv);
+const { argv } = yargs(arr);
+invokeAction(argv);
+// invokeAction({ action: "list" });
+// invokeAction({ action: "readById", id: "AeHIrLTr6JkxGE6SN-0Rw" });
+// invokeAction({
 //   action: "add",
 //   name: "Alex",
 //   email: "san2003@ukr.net",
 //   phone: "0675555555",
 // });
-// invokAction({
+// invokeAction({
 //   action: "updateById",
 //   id: "GnTwWkYSRtI2zll3XnAFq",
 //   name: "Alla",
 //   email: "Alla@ukr.net",
 //   phone: "0990760933",
 // });
-invokAction({
-  action: "deleteById",
-  id: "rsKkOQUi80UsgVPCcLZZW",
-});
+// invokeAction({
+//   action: "deleteById",
+//   id: "rsKkOQUi80UsgVPCcLZZW",
+// });
